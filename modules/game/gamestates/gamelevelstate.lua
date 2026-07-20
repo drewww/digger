@@ -83,7 +83,7 @@ function GameLevelState:draw()
    -- custom terminal drawing goes here!
 
    -- Say hello!
-   self.display:print(1, 1, "Hello prism!")
+   -- self.display:print(1, 1, "Hello prism!")
 
    -- Actually render the terminal out and present it to the screen.
    -- You could use love2d to translate and say center a smaller terminal or

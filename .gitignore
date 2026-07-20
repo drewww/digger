@@ -4,6 +4,7 @@
 !.gitmodules
 !.luarc.json
 !.vscode
+!.zed
 
 build/
 makelove-build/

@@ -14,16 +14,28 @@ function GameLevelState:__new(display)
    -- and pass in an existing player object between levels.
    local builder = prism.LevelBuilder()
 
-   builder:rectangle("line", 0, 0, 32, 32, prism.cells.Wall)
-   -- Fill the interior with floor tiles
-   builder:rectangle("fill", 1, 1, 31, 31, prism.cells.Floor)
+   builder:rectangle("fill", 0, 0, 64, 64, prism.cells.Wall)
+
+   builder:rectangle("fill", 1, 1, 4, 63, prism.cells.Floor)
+
+   builder:rectangle("fill", 32, 1, 35, 63, prism.cells.Floor)
+
+   builder:rectangle("fill", 1, 20, 63, 23, prism.cells.Floor)
+
+
+   local sizes = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5 }
+   for i = 1, 300, 1 do
+      local x, y = math.random(1, 63), math.random(1, 63)
+
+      local size = sizes[math.random(1, #sizes)]
+
+      builder:rectangle("fill", x, y, x + size, y + size, prism.cells.Floor)
+   end
+
    -- Add a small block of walls within the map
-   builder:rectangle("fill", 5, 5, 7, 7, prism.cells.Wall)
-   -- Add a pit area to the southeast
-   builder:rectangle("fill", 20, 20, 25, 25, prism.cells.Pit)
 
    -- Place the player character at a starting location
-   builder:addActor(prism.actors.Player(), 12, 12)
+   builder:addActor(prism.actors.Player(), 1, 1)
 
    -- Add systems
    builder:addSystems(prism.systems.SensesSystem(), prism.systems.SightSystem())

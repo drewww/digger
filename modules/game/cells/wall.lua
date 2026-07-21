@@ -3,6 +3,7 @@ prism.registerCell("Wall", function()
       prism.components.Name("Wall"),
       prism.components.Drawable { index = "#" },
       prism.components.Collider(),
+      prism.components.Diggable(),
       prism.components.Opaque(),
    }
 end)

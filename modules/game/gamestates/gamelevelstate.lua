@@ -34,7 +34,6 @@ function GameLevelState:__new(display)
 
    for x = 1, 64 do
       for y = 1, 64 do
-         prism.logger.info(x, y)
          local cell = builder:getCell(x, y)
 
          local colors = { prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4
@@ -83,8 +82,18 @@ function GameLevelState:updateDecision(dt, owner, decision)
    -- Controls are accessed directly via table index.
    if controls.move.pressed then
       local destination = owner:getPosition() + controls.move.vector
-      local move = prism.actions.Move(owner, destination)
-      if self:setAction(move) then return end
+
+      local dig = prism.actions.Dig(owner, destination, 1)
+      local s, e = self.level:canPerform(dig)
+      prism.logger.info("try dig: ", tostring(s), " err: ", e)
+
+      if self.level:canPerform(dig) then
+         prism.logger.info("digging at " .. destination:decompose())
+         if self:setAction(dig) then return end
+      else
+         local move = prism.actions.Move(owner, destination)
+         if self:setAction(move) then return end
+      end
    end
 
    if controls.wait.pressed then self:setAction(prism.actions.Wait(owner)) end

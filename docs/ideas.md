@@ -1,0 +1,5 @@
+- fossils as items you need to extract "whole"
+- sonar sensing
+- walls have a strength
+- need to find fuel in the walls to power up your big mine and move it??
+- everything is connected to your big miner

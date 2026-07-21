@@ -32,6 +32,25 @@ function GameLevelState:__new(display)
       builder:rectangle("fill", x, y, x + size, y + size, prism.cells.Floor)
    end
 
+   for x = 1, 64 do
+      for y = 1, 64 do
+         prism.logger.info(x, y)
+         local cell = builder:getCell(x, y)
+
+         local colors = { prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4
+             .DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4
+             .GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4
+             .BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4
+             .DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4
+             .YELLOW }
+
+         cell:expect(prism.components.Drawable).color = colors[math.random(1, #colors)]
+
+         builder:set(x, y, cell)
+      end
+   end
+
+
    -- Add a small block of walls within the map
 
    -- Place the player character at a starting location

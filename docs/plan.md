@@ -1,13 +1,16 @@
 # NEXT
- - Try putting valuable stuff around. Just an actor that has a gold color. Produce it with a simple "vein" agent that moves around in walls.
+ - [DONE] Try putting valuable stuff around. Just an actor that has a gold color. Produce it with a simple "vein" agent that moves around in walls.
 - Make a dynamite action that drops dynamite that remote activates? Save on countdown system.
-- Make the player tiny and have the big thing be a drill?? 
+- [DONE] Make the player tiny and have the big thing be a drill?? 
    - make a push action
    - if you push, drill on the opposite side of the drill
    - can only do a dig if you're within range of the drill
       - could have there be a cable connection that traces back and limits your range
       - what if it's docked TO the drill? it moves around w/ the drill and then you bump it to pick it up. 
-- [NEXT] make player 1x1
-- [NEXT] make bump to mine action, leave "rubble" behind
+- [DONE] make player 1x1
+- [DONE] make bump to mine action, leave "rubble" behind
    - consider fun rubble dynamics -- can it fill up and spill out?? where does it go for big miner activities?
-- 
+- make big thing
+- make big thing pushable
+   - make push action
+- make pushing big thing mine big

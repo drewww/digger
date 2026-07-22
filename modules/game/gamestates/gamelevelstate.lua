@@ -53,7 +53,8 @@ function GameLevelState:__new(display)
    -- Add a small block of walls within the map
 
    -- Place the player character at a starting location
-   builder:addActor(prism.actors.Player(), 1, 1)
+   builder:addActor(prism.actors.˝G(), 1, 1)
+   builder:addActor(prism.actors.Drill(), 1, 4)
 
    -- Add systems
    builder:addSystems(prism.systems.SensesSystem(), prism.systems.SightSystem())

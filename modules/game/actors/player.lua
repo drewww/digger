@@ -1,9 +1,9 @@
 prism.registerActor("Player", function()
    return prism.Actor.fromComponents {
       prism.components.Name("Player"),
-      prism.components.Drawable { index = "@", color = prism.Color4.BLUE, size = 1 },
+      prism.components.Drawable { index = "@", color = prism.Color4.BLUE, size = 2 },
       prism.components.Position(),
-      prism.components.Collider { allowedMovetypes = { "walk" }, size = 1 },
+      prism.components.Collider { allowedMovetypes = { "walk" }, size = 2 },
       prism.components.PlayerController(),
       prism.components.Senses(),
       prism.components.Sight { range = 64, fov = true },

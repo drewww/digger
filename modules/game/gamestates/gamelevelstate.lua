@@ -16,15 +16,14 @@ function GameLevelState:__new(display)
 
    builder:rectangle("fill", 0, 0, 64, 64, prism.cells.Wall)
 
-   builder:rectangle("fill", 1, 1, 4, 63, prism.cells.Floor)
+   builder:rectangle("fill", 1, 1, 2, 63, prism.cells.Floor)
 
    builder:rectangle("fill", 32, 1, 35, 63, prism.cells.Floor)
 
    builder:rectangle("fill", 1, 20, 63, 23, prism.cells.Floor)
 
-
    local sizes = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5 }
-   for i = 1, 300, 1 do
+   for i = 1, 200, 1 do
       local x, y = math.random(1, 63), math.random(1, 63)
 
       local size = sizes[math.random(1, #sizes)]

@@ -10,7 +10,11 @@
 - [DONE] make player 1x1
 - [DONE] make bump to mine action, leave "rubble" behind
    - consider fun rubble dynamics -- can it fill up and spill out?? where does it go for big miner activities?
-- make big thing
-- make big thing pushable
-   - make push action
-- make pushing big thing mine big
+- [done] make big thing
+- [done] make big thing pushable
+   - [done] make push action
+- [done] make pushing big thing mine big
+- make pull
+   - could be first "push" into something makes it a unit for moving 
+   - then when you move it moves anything connected to you in the same vector
+   - if the move fails, disconnect

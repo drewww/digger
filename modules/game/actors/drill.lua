@@ -3,6 +3,7 @@ prism.registerActor("Drill", function()
       prism.components.Name("Drill"),
       prism.components.Drawable { index = ">", color = prism.Color4.LIME, size = 1 },
       prism.components.Position(),
+      prism.components.Holdable(),
       prism.components.Pushable(),
       prism.components.Digger(),
       prism.components.Collider { size = 1 },

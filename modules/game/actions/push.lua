@@ -21,7 +21,16 @@ function Push:perform(level, target, direction)
    -- start without digging
 
    -- trigger a move action
-   local move = prism.actions.Move(target, target:getPosition() + direction)
+   local destination = target:getPosition() + direction
+
+   if target:has(prism.components.Digger) then
+      -- trigger a dig action
+      local dig = prism.actions.Dig(target, destination, 0)
+      local s, e = level:tryPerform(dig)
+      prism.logger.info("push.dig: ", s, e)
+   end
+
+   local move = prism.actions.Move(target, destination)
 
    if level:canPerform(move) then
       level:perform(move)

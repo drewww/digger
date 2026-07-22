@@ -4,6 +4,7 @@ prism.registerActor("Drill", function()
       prism.components.Drawable { index = ">", color = prism.Color4.LIME, size = 1 },
       prism.components.Position(),
       prism.components.Pushable(),
+      prism.components.Digger(),
       prism.components.Collider { size = 1 },
       prism.components.Senses(),
       prism.components.Mover { "walk" },

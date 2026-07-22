@@ -9,7 +9,6 @@ local Move = prism.Action:extend("Move")
 Move.targets = { MoveTarget }
 
 Move.requiredComponents = {
-   prism.components.Controller,
    prism.components.Mover,
 }
 

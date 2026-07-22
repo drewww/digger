@@ -53,8 +53,8 @@ function GameLevelState:__new(display)
    -- Add a small block of walls within the map
 
    -- Place the player character at a starting location
-   builder:addActor(prism.actors.˝G(), 1, 1)
-   builder:addActor(prism.actors.Drill(), 1, 4)
+   builder:addActor(prism.actors.Player(), 1, 1)
+   builder:addActor(prism.actors.Drill(), 2, 4)
 
    -- Add systems
    builder:addSystems(prism.systems.SensesSystem(), prism.systems.SightSystem())
@@ -84,6 +84,8 @@ function GameLevelState:updateDecision(dt, owner, decision)
    if controls.move.pressed then
       local destination = owner:getPosition() + controls.move.vector
 
+
+      local pushable = self.level:query(prism.components.Pushable):at(destination:decompose()):first()
       local dig = prism.actions.Dig(owner, destination, 1)
       local s, e = self.level:canPerform(dig)
       prism.logger.info("try dig: ", tostring(s), " err: ", e)
@@ -91,6 +93,11 @@ function GameLevelState:updateDecision(dt, owner, decision)
       if self.level:canPerform(dig) then
          prism.logger.info("digging at " .. destination:decompose())
          if self:setAction(dig) then return end
+      elseif pushable then
+         prism.logger.info("pushing")
+         local push = prism.actions.Push(owner, pushable, destination - owner:getPosition())
+
+         if self:setAction(push) then return end
       else
          local move = prism.actions.Move(owner, destination)
          if self:setAction(move) then return end

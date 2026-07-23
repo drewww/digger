@@ -42,9 +42,16 @@ function GameLevelState:__new(display)
              .DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4
              .YELLOW }
 
-         cell:expect(prism.components.Drawable).color = colors[math.random(1, #colors)]
+         if cell:has(prism.components.Opaque) then
+            local color = colors[math.random(1, #colors)]
+            cell:expect(prism.components.Drawable).color = color
+            builder:set(x, y, cell)
 
-         builder:set(x, y, cell)
+            if color == prism.Color4.YELLOW then
+               builder:set(x, y, prism.cells.Floor())
+               builder:addActor(prism.actors.Gold(), x, y)
+            end
+         end
       end
    end
 

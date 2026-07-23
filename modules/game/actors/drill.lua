@@ -1,7 +1,7 @@
 prism.registerActor("Drill", function()
    return prism.Actor.fromComponents {
       prism.components.Name("Drill"),
-      prism.components.Drawable { index = ">", color = prism.Color4.LIME, size = 1 },
+      prism.components.Drawable { index = ">", color = prism.Color4.DARKGREY, size = 1 },
       prism.components.Position(),
       prism.components.Holdable(),
       prism.components.Pushable(),

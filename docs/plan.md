@@ -14,7 +14,7 @@
 - [done] make big thing pushable
    - [done] make push action
 - [done] make pushing big thing mine big
-- make pull
-   - could be first "push" into something makes it a unit for moving 
+- [done] make pull
+   - [done] could be first "push" into something makes it a unit for moving 
    - then when you move it moves anything connected to you in the same vector
    - if the move fails, disconnect

@@ -79,6 +79,14 @@ function GameLevelState:updateDecision(dt, owner, decision)
    -- Controls need to be updated each frame.
    controls:update()
 
+   if controls.release.pressed then
+      prism.logger.info("release pressed")
+      for held, relation in pairs(owner:getRelations(prism.relations.HoldsRelation)) do
+         prism.logger.info("releasing: ", held)
+         self.level:tryPerform(prism.actions.Release(owner, held))
+      end
+   end
+
    -- Controls are accessed directly via table index.
    if controls.move.pressed then
       local destination = owner:getPosition() + controls.move.vector

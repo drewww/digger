@@ -10,9 +10,7 @@ function Release:canPerform(level, target)
 end
 
 function Release:perform(level, target)
-   prism.logger.info("releasing: ", target)
    target:removeRelation(prism.relations.HeldByRelation, self.owner)
-   self.owner:expect(prism.components.Drawable).background = prism.Color4.TRANSPARENT
 end
 
 return Release

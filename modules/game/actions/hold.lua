@@ -11,9 +11,6 @@ end
 
 function Hold:perform(level, target)
    target:addRelation(prism.relations.HeldByRelation, self.owner)
-
-   -- change colors of things
-   self.owner:expect(prism.components.Drawable).background = target:expect(prism.components.Drawable).color
 end
 
 return Hold

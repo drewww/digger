@@ -108,25 +108,25 @@ function GameLevelState:updateDecision(dt, owner, decision)
       local s, e = self.level:canPerform(dig)
 
       -- if something is held THEN do a push for that
-      local holding = owner:getRelation(prism.relations.HoldsRelation)
-      prism.logger.info("held item: ", holding)
-      if holding then
-         -- do a push + move on that item
-         prism.logger.info("pushing HELD item")
-         local push = prism.actions.Push(owner, holding, destination - owner:getPosition())
+      -- local holding = owner:getRelation(prism.relations.HoldsRelation)
+      -- prism.logger.info("held item: ", holding)
+      -- if holding then
+      --    -- do a push + move on that item
+      --    prism.logger.info("pushing HELD item")
+      --    local push = prism.actions.Push(owner, holding, destination - owner:getPosition())
 
-         if self:setAction(push) then return end
-      end
+      --    if self:setAction(push) then return end
+      -- end
 
       if self.level:canPerform(dig) then
          prism.logger.info("digging at " .. destination:decompose())
          if self:setAction(dig) then return end
-      elseif holdable then
+      elseif holdable and not holdable:hasRelation(prism.relations.HeldByRelation, owner) then
          prism.logger.info("grasp something")
 
          local hold = prism.actions.Hold(owner, holdable)
          if self:setAction(hold) then return end
-      elseif pushable then
+      elseif pushable and not pushable:hasRelation(prism.relations.HeldByRelation, owner) then
          prism.logger.info("pushing")
          local push = prism.actions.Push(owner, pushable, destination - owner:getPosition())
 

@@ -35,6 +35,7 @@
       - when we drop ... unlink everyting?
          - that creates a funny dynamic when you pick up.
          - so for now keep it all linked. 
+- stop merging automatically; on grab, look for all adjacent ones and grab them at once.
 - build the range-based dig ability
    - have an entity that when bumped basically "picks up" an item.
    - visually would we show the player holding it? ideally yes, that matches other things

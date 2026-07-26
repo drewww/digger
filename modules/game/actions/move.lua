@@ -45,20 +45,6 @@ function Move:perform(level, destination)
 
       -- now, if after the move, look at adjacent spaces and see if any of them don't have a relationship with the owner, add one.
       -- prism.logger.info("test: ", self.owner:getRelation)
-
-      local held = self.owner:getRelation(prism.relations.HoldsRelation)
-
-      prism.logger.info("held: ", held)
-
-      if held then
-         for _, dir in ipairs({ prism.Vector2.UP, prism.Vector2.RIGHT, prism.Vector2.DOWN, prism.Vector2.LEFT }) do
-            local adj = level:query(prism.components.Holdable):at((dest + dir):decompose()):first()
-            prism.logger.info("checking adjacent: ", adj, " at ", dest + dir)
-            if adj then
-               self.owner:addRelation(prism.relations.HoldsRelation, adj)
-            end
-         end
-      end
    end
 end
 

@@ -20,7 +20,7 @@
    - if the move fails, disconnect
 
 
-- think about how to do multi-piece gold?
+- [done] think about how to do multi-piece gold?
    - this is tractable but not exactly a top priority. but it would allow for strangely shaped "whole" pieces which is a cool thing I want to feel out
    - would this be the same system for other oddly shaped actors?
    - move
@@ -35,7 +35,7 @@
       - when we drop ... unlink everyting?
          - that creates a funny dynamic when you pick up.
          - so for now keep it all linked. 
-- stop merging automatically; on grab, look for all adjacent ones and grab them at once.
+- [done] stop merging automatically; on grab, look for all adjacent ones and grab them at once.
 - build the range-based dig ability
    - have an entity that when bumped basically "picks up" an item.
    - visually would we show the player holding it? ideally yes, that matches other things
@@ -43,6 +43,4 @@
    - re-bump the home entity to drop it and rest
 - do the multi-sized pushing behavior -- make a 4x4 pushable into walls and digging?
    - if we only did square then this is okay but if we wanted, say, a 3x1 drill THEN we have to build rotation.
-   - maybe if you attach at the angle you can rotate it? but the middle is push mode?
-
-what's the deal with rubble? that feels like potentially interesting friction. do you need to go get a shovel or something to compact it? if you don't, what's the cost? hmmm.
+- maybe if you attach at the angle you can rotate it? but the middle is push mode?

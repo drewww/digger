@@ -3,3 +3,15 @@
 - walls have a strength
 - need to find fuel in the walls to power up your big mine and move it??
 - everything is connected to your big miner
+- rock paper scissors with different rock types + 'weapons'?
+   - laser / explosive / drill / thermal / acid
+   - hard rock / soft rock / crystal / metal / ??? -- need to learn about rocks tbh
+- tools that you "dial in" -- set the radius of the explosive charge, the angle, the power. so it's not just "letting it go"
+   - may interact with some fuel system. a cost to do it, and variable cost on powering up? or it could varry. 
+- maybe part of waht you're finding is fuel for your various items. and you can't guarantee you have what you "want." Like you might be finding the resource that powers up your drills, but not your lasers. 
+- a sensor that can tell you the %s of different things but not where they are
+- a sensor that senses exactly one thing precisely 
+- a rock that collapses/spreads?
+   - what if the rubble situation is that there are like rock-eating plants or animals that close off paths you've opened?
+- what are the resource constraints? 
+- rubble could be something. some reason to shovel it? some value in it? some risk for leaving it around?

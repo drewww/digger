@@ -170,7 +170,37 @@ function GameLevelState:draw()
 
 
       if player:has(prism.components.Sensing) then
-         self.display:print(1, 1, "SENSING", prism.Color4.WHITE)
+         -- compute what we can see.
+         local sensing = player:expect(prism.components.Sensing)
+
+         local map = {}
+
+         -- loop through everything within range for now
+         for x = math.floor(player:getPosition().x - sensing.range / 2), math.floor(player:getPosition().x + sensing.range / 2), 1 do
+            for y = math.floor(player:getPosition().y - sensing.range / 2), math.floor(player:getPosition().y + sensing.range / 2), 1 do
+               if self.level:inBounds(x, y) then
+                  local cell = self.level:getCell(x, y)
+                  local agent = self.level:query():at(x, y):first()
+
+                  if agent then
+                     map[agent:expect(prism.components.Name).name] = map[agent:expect(prism.components.Name).name] and
+                         map[agent:expect(prism.components.Name).name] + 1 or 1
+                  elseif cell then
+                     map[cell:expect(prism.components.Name).name] = map[cell:expect(prism.components.Name).name] and
+                         map[cell:expect(prism.components.Name).name] + 1 or 1
+                  end
+               end
+            end
+         end
+
+
+         self.display:print(1, 1, "TRICORDER: ", prism.Color4.WHITE)
+
+         local i = 2
+         for name, val in pairs(map) do
+            self.display:print(1, i, name .. "=" .. val, prism.Color4.WHITE)
+            i = i + 1
+         end
       end
    end
 

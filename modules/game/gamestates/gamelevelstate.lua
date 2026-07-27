@@ -175,23 +175,28 @@ function GameLevelState:draw()
 
          local map = {}
 
-         -- loop through everything within range for now
-         for x = math.floor(player:getPosition().x - sensing.range / 2), math.floor(player:getPosition().x + sensing.range / 2), 1 do
-            for y = math.floor(player:getPosition().y - sensing.range / 2), math.floor(player:getPosition().y + sensing.range / 2), 1 do
-               if self.level:inBounds(x, y) then
-                  local cell = self.level:getCell(x, y)
-                  local agent = self.level:query():at(x, y):first()
+         -- loop through everything within range and field of view
+         local locations = sensing:getLocationsInRange(player:getPosition(), prism.Vector2.RIGHT)
 
-                  if agent then
-                     map[agent:expect(prism.components.Name).name] = map[agent:expect(prism.components.Name).name] and
-                         map[agent:expect(prism.components.Name).name] + 1 or 1
-                  elseif cell then
-                     map[cell:expect(prism.components.Name).name] = map[cell:expect(prism.components.Name).name] and
-                         map[cell:expect(prism.components.Name).name] + 1 or 1
-                  end
+         self.display:beginCamera()
+         for _, loc in ipairs(locations) do
+            local x, y = loc:decompose()
+            if self.level:inBounds(x, y) then
+               local cell = self.level:getCell(x, y)
+               local agent = self.level:query():at(x, y):first()
+
+               self.display:putBG(x, y, prism.Color4.BLUE)
+
+               if agent then
+                  map[agent:expect(prism.components.Name).name] = map[agent:expect(prism.components.Name).name] and
+                      map[agent:expect(prism.components.Name).name] + 1 or 1
+               elseif cell then
+                  map[cell:expect(prism.components.Name).name] = map[cell:expect(prism.components.Name).name] and
+                      map[cell:expect(prism.components.Name).name] + 1 or 1
                end
             end
          end
+         self.display:endCamera()
 
 
          self.display:print(1, 1, "TRICORDER: ", prism.Color4.WHITE)

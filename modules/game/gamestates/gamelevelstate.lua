@@ -1,5 +1,31 @@
 local controls = require "controls"
 
+--- Starts at (x, y) and randomly walks a vein of gold through the rock,
+--- turning each wall tile it visits along the way into a floor tile with a
+--- Gold actor, so gold clumps together instead of appearing as scattered
+--- isolated tiles.
+--- @param builder LevelBuilder
+--- @param rng RNG
+--- @param x integer
+--- @param y integer
+local function digGoldVein(builder, rng, x, y)
+   local directions = prism.Vector2.neighborhood4
+   local length = rng:random(4, 10)
+
+   for i = 1, length do
+      if x < 1 or x > 64 or y < 1 or y > 64 then break end
+
+      local cell = builder:getCell(x, y)
+      if cell and cell:has(prism.components.Opaque) then
+         builder:set(x, y, prism.cells.Floor())
+         builder:addActor(prism.actors.Gold(), x, y)
+      end
+
+      local dir = directions[rng:random(1, #directions)]
+      x, y = x + dir.x, y + dir.y
+   end
+end
+
 --- @class GameLevelState : LevelState
 --- A custom game level state responsible for initializing the level map,
 --- handling input, and drawing the state to the screen.
@@ -22,7 +48,7 @@ function GameLevelState:__new(display)
 
    builder:rectangle("fill", 1, 1, 5, 5, prism.cells.Floor)
 
-   local sizes = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5 }
+   local sizes = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5 }
    for i = 1, 200, 1 do
       local x, y = rng:random(1, 63), rng:random(1, 63)
 
@@ -40,7 +66,7 @@ function GameLevelState:__new(display)
          local cell = builder:getCell(x, y)
 
          if cell:has(prism.components.Opaque) then
-            local noise = love.math.perlinNoise(x / 10 + nox, y / 10 + noy)
+            local noise = love.math.perlinNoise(x / 4 + nox, y / 4 + noy)
 
             local rockType, color
             if noise > 0.5 then
@@ -55,11 +81,9 @@ function GameLevelState:__new(display)
             cell:expect(prism.components.Drawable).color = color
             builder:set(x, y, cell)
 
-            -- Keep a small independent chance of gold, unrelated to rock type.
-            if rng:random(1, 25) == 1 then
-               builder:set(x, y, prism.cells.Floor())
-               builder:addActor(prism.actors.Gold(), x, y)
-            end
+            -- Occasionally seed a gold vein here and let it wander through
+            -- the rock, rather than scattering single isolated gold tiles.
+            if rng:random(1, 300) == 1 then digGoldVein(builder, rng, x, y) end
          end
       end
    end

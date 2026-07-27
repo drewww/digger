@@ -146,7 +146,7 @@ function GameLevelState:updateDecision(dt, owner, decision)
 
 
       local dig = prism.actions.Dig(owner, destination, 1)
-      local s, e = self.level:canPerform(dig)
+      local canDig = not owner:has(prism.components.Sensing) and self.level:canPerform(dig)
 
       -- if something is held THEN do a push for that
       -- local holding = owner:getRelation(prism.relations.HoldsRelation)
@@ -159,7 +159,7 @@ function GameLevelState:updateDecision(dt, owner, decision)
       --    if self:setAction(push) then return end
       -- end
 
-      if self.level:canPerform(dig) then
+      if canDig then
          prism.logger.info("digging at " .. destination:decompose())
          if self:setAction(dig) then return end
       elseif holdable and not holdable:hasRelation(prism.relations.HeldByRelation, owner) then
@@ -222,12 +222,13 @@ function GameLevelState:draw()
 
                self.display:putBG(x, y, prism.Color4.DARKGREY)
 
+               -- Only report rock types and gold; ignore everything else.
                if agent then
-                  map[agent:expect(prism.components.Name).name] = map[agent:expect(prism.components.Name).name] and
-                      map[agent:expect(prism.components.Name).name] + 1 or 1
-               elseif cell then
-                  map[cell:expect(prism.components.Name).name] = map[cell:expect(prism.components.Name).name] and
-                      map[cell:expect(prism.components.Name).name] + 1 or 1
+                  local name = agent:expect(prism.components.Name).name
+                  if name == "Gold" then map[name] = (map[name] or 0) + 1 end
+               elseif cell and cell:has(prism.components.Rock) then
+                  local label = cell:expect(prism.components.Rock).type
+                  map[label] = (map[label] or 0) + 1
                end
             end
          end
@@ -236,9 +237,17 @@ function GameLevelState:draw()
 
          self.display:print(1, 1, "TRICORDER: ", prism.Color4.WHITE)
 
+         -- Sort entries by frequency, descending.
+         local entries = {}
+         for name, count in pairs(map) do
+            table.insert(entries, { name = name, count = count })
+         end
+         table.sort(entries, function(a, b) return a.count > b.count end)
+
          local i = 2
-         for name, val in pairs(map) do
-            self.display:print(1, i, name .. "=" .. val, prism.Color4.WHITE)
+         for _, entry in ipairs(entries) do
+            local color = entry.name == "Gold" and prism.Color4.YELLOW or prism.Color4.WHITE
+            self.display:print(1, i, entry.name .. "=" .. entry.count, color)
             i = i + 1
          end
       end

@@ -94,6 +94,14 @@ function GameLevelState:updateDecision(dt, owner, decision)
       end
    end
 
+   if controls.sense.pressed then
+      if owner:has(prism.components.Sensing) then
+         owner:remove(prism.components.Sensing)
+      else
+         owner:give(prism.components.Sensing())
+      end
+   end
+
    -- Controls are accessed directly via table index.
    if controls.move.pressed then
       local destination = owner:getPosition() + controls.move.vector
@@ -159,9 +167,15 @@ function GameLevelState:draw()
       self.display:beginCamera()
       self.display:putSenses(primary, secondary, self.level)
       self.display:endCamera()
+
+
+      if player:has(prism.components.Sensing) then
+         self.display:print(1, 1, "SENSING", prism.Color4.WHITE)
+      end
    end
 
    -- custom terminal drawing goes here!
+
 
    -- Say hello!
    -- self.display:print(1, 1, "Hello prism!")

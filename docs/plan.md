@@ -41,6 +41,19 @@
    - visually would we show the player holding it? ideally yes, that matches other things
    - draw a path from the player back to the "home" entity
    - re-bump the home entity to drop it and rest
+   - maybe don't do this yet; it's a necessary constraint to make arbitrary single-tile dig not just the absolute best thing. but doesn't teach us much.
+      - (oh random side idea -- what if the downside to single tile digging is that it generates a bunch of waste? maybe you can't get any "dust" value out of things)
 - do the multi-sized pushing behavior -- make a 4x4 pushable into walls and digging?
    - if we only did square then this is okay but if we wanted, say, a 3x1 drill THEN we have to build rotation.
 - maybe if you attach at the angle you can rotate it? but the middle is push mode?
+- what do I need to learn about? 
+   - sensing
+   - rock types
+   - digging types
+   - they're all wrapped up. what'st he most simple piece of the triangle?
+      - maybe sensing
+- build a directional sensor
+   - to start, just make it native to the player -- no need for the whole slot-based activation thing from BREACH yet
+   - what kind of thing is this? functionally it's just like a UI element, I guess? just like displaying health based on world state stuff. 
+   - maybe some button toggles it on and off so you can see what you're measuring and that also shows the UI element.
+   - so put some stuff in draw and make a component that's added or removed

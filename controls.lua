@@ -15,6 +15,7 @@ return spectrum.Input.Controls {
       move_down      = { "s", "j", "axis:lefty-" },
       move_downright = { "c", "n" },
       wait           = "x",
+      sense          = "f",
       release        = "space"
    },
    -- Pairs are controls that map to either 4 or 8 directions.

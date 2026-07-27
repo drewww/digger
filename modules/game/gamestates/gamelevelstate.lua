@@ -14,26 +14,26 @@ function GameLevelState:__new(display)
    -- and pass in an existing player object between levels.
    local builder = prism.LevelBuilder()
 
+   local seed = love.timer.getTime()
+   local rng = prism.RNG(seed)
+   builder:addSeed(seed)
+
    builder:rectangle("fill", 0, 0, 64, 64, prism.cells.Wall)
 
-   builder:rectangle("fill", 1, 1, 2, 63, prism.cells.Floor)
-
-   builder:rectangle("fill", 32, 1, 35, 63, prism.cells.Floor)
-
-   builder:rectangle("fill", 1, 20, 63, 23, prism.cells.Floor)
+   builder:rectangle("fill", 1, 1, 5, 5, prism.cells.Floor)
 
    local sizes = { 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5 }
    for i = 1, 200, 1 do
-      local x, y = math.random(1, 63), math.random(1, 63)
+      local x, y = rng:random(1, 63), rng:random(1, 63)
 
-      local size = sizes[math.random(1, #sizes)]
+      local size = sizes[rng:random(1, #sizes)]
 
       builder:rectangle("fill", x, y, x + size, y + size, prism.cells.Floor)
    end
 
    -- Offset the noise sample to a random point so each level gets a
    -- different, but still deterministic, distribution of rock types.
-   local nox, noy = math.random(1, 10000), math.random(1, 10000)
+   local nox, noy = rng:random(1, 10000), rng:random(1, 10000)
 
    for x = 1, 64 do
       for y = 1, 64 do
@@ -56,7 +56,7 @@ function GameLevelState:__new(display)
             builder:set(x, y, cell)
 
             -- Keep a small independent chance of gold, unrelated to rock type.
-            if math.random(1, 25) == 1 then
+            if rng:random(1, 25) == 1 then
                builder:set(x, y, prism.cells.Floor())
                builder:addActor(prism.actors.Gold(), x, y)
             end

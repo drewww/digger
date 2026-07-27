@@ -31,23 +31,32 @@ function GameLevelState:__new(display)
       builder:rectangle("fill", x, y, x + size, y + size, prism.cells.Floor)
    end
 
+   -- Offset the noise sample to a random point so each level gets a
+   -- different, but still deterministic, distribution of rock types.
+   local nox, noy = math.random(1, 10000), math.random(1, 10000)
+
    for x = 1, 64 do
       for y = 1, 64 do
          local cell = builder:getCell(x, y)
 
-         local colors = { prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4
-             .DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4
-             .GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4
-             .BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4
-             .DARKGREY, prism.Color4.BROWN, prism.Color4.GREY, prism.Color4.DARKGREY, prism.Color4.BROWN, prism.Color4
-             .YELLOW }
-
          if cell:has(prism.components.Opaque) then
-            local color = colors[math.random(1, #colors)]
+            local noise = love.math.perlinNoise(x / 10 + nox, y / 10 + noy)
+
+            local rockType, color
+            if noise > 0.5 then
+               rockType = "igneous"
+               color = prism.Color4.DARKGREY
+            else
+               rockType = "sedimentary"
+               color = prism.Color4.GREY
+            end
+
+            cell:give(prism.components.Rock(rockType, 1))
             cell:expect(prism.components.Drawable).color = color
             builder:set(x, y, cell)
 
-            if color == prism.Color4.YELLOW then
+            -- Keep a small independent chance of gold, unrelated to rock type.
+            if math.random(1, 25) == 1 then
                builder:set(x, y, prism.cells.Floor())
                builder:addActor(prism.actors.Gold(), x, y)
             end

@@ -176,7 +176,9 @@ function GameLevelState:draw()
          local map = {}
 
          -- loop through everything within range and field of view
-         local locations = sensing:getLocationsInRange(player:getPosition(), prism.Vector2.RIGHT)
+         local facing = player:has(prism.components.Facing) and player:expect(prism.components.Facing).direction or
+             prism.Vector2.RIGHT
+         local locations = sensing:getLocationsInRange(player:getPosition(), facing)
 
          self.display:beginCamera()
          for _, loc in ipairs(locations) do
@@ -185,7 +187,7 @@ function GameLevelState:draw()
                local cell = self.level:getCell(x, y)
                local agent = self.level:query():at(x, y):first()
 
-               self.display:putBG(x, y, prism.Color4.BLUE)
+               self.display:putBG(x, y, prism.Color4.DARKGREY)
 
                if agent then
                   map[agent:expect(prism.components.Name).name] = map[agent:expect(prism.components.Name).name] and

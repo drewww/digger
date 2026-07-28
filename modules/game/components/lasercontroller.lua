@@ -10,9 +10,15 @@ local LaserController = prism.components.Controller:extend "LaserController"
 
 function LaserController:__new()
    self.active = false
+   self.beamCells = {}
 end
 
 function LaserController:act(level, actor)
+   -- Clear last turn's beam tags before retracing (or leaving off) the beam,
+   -- so the visual trail doesn't linger after the laser moves on or is
+   -- deactivated.
+   self:clearBeam()
+
    if not self.active then return prism.actions.Wait(actor) end
 
    local position = actor:getPosition()
@@ -31,12 +37,24 @@ function LaserController:act(level, actor)
          end
 
          -- Mark cells the beam passes through but doesn't dig, for the
-         -- visual effect drawn in GameLevelState:draw.
+         -- visual effect drawn in GameLevelState:draw. Track them so we can
+         -- clear the tag again next turn.
          cell:give(prism.components.Laser())
+         table.insert(self.beamCells, cell)
       end
    end
 
    return prism.actions.Wait(actor)
+end
+
+--- Removes the Laser tag from every cell tagged by the last call to act.
+--- @private
+function LaserController:clearBeam()
+   for _, cell in ipairs(self.beamCells) do
+      if cell:has(prism.components.Laser) then cell:remove(prism.components.Laser) end
+   end
+
+   self.beamCells = {}
 end
 
 return LaserController

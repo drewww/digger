@@ -182,8 +182,9 @@ function GameLevelState:updateDecision(dt, owner, decision)
 
          if self:setAction(push) then return end
       elseif laser then
-         prism.logger.info("activating laser")
-         laser:expect(prism.components.LaserController).active = true
+         local laserController = laser:expect(prism.components.LaserController)
+         laserController.active = not laserController.active
+         prism.logger.info(laserController.active and "activating laser" or "deactivating laser")
 
          if self:setAction(prism.actions.Wait(owner)) then return end
       else
@@ -214,9 +215,13 @@ function GameLevelState:draw()
       self.display:beginCamera()
       self.display:putSenses(primary, secondary, self.level)
 
-      -- Highlight any cell the laser is currently passing through.
+      -- Highlight any cell the laser is currently passing through, but only
+      -- if the player can currently see it.
+      local playerSenses = player:get(prism.components.Senses)
       for x, y, cell in self.level:eachCell() do
-         if cell and cell:has(prism.components.Laser) then self.display:putBG(x, y, prism.Color4.RED) end
+         if cell and cell:has(prism.components.Laser) and playerSenses and playerSenses.cells:get(x, y) then
+            self.display:putBG(x, y, prism.Color4.RED)
+         end
       end
 
       self.display:endCamera()

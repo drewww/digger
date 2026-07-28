@@ -38,13 +38,6 @@ end
 function Move:perform(level, destination)
    local moves = self:heldMoves(level, destination)
 
-   if self.owner:has(prism.components.Facing) then
-      local relative = destination - self.owner:getPosition()
-      if relative:length() > 0 then
-         self.owner:expect(prism.components.Facing).direction = relative:normalize()
-      end
-   end
-
    for _, move in ipairs(moves) do
       local actor, dest = move[1], move[2]
       prism.logger.info("move: ", actor, " from ", actor:getPosition(), " to ", dest)

@@ -139,6 +139,11 @@ function GameLevelState:updateDecision(dt, owner, decision)
    if controls.move.pressed then
       local destination = owner:getPosition() + controls.move.vector
 
+      -- Update facing based on the direction entered, even if the resulting
+      -- action (dig/push/hold/move) ends up failing or doing nothing.
+      if owner:has(prism.components.Facing) then
+         owner:expect(prism.components.Facing).direction = controls.move.vector:normalize()
+      end
 
       local pushable = self.level:query(prism.components.Pushable):at(destination:decompose()):first()
 

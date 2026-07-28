@@ -52,9 +52,10 @@
    - digging types
    - they're all wrapped up. what'st he most simple piece of the triangle?
       - maybe sensing
-- build a directional sensor
+- [done] build a directional sensor
    - to start, just make it native to the player -- no need for the whole slot-based activation thing from BREACH yet
    - what kind of thing is this? functionally it's just like a UI element, I guess? just like displaying health based on world state stuff. 
    - maybe some button toggles it on and off so you can see what you're measuring and that also shows the UI element.
    - so put some stuff in draw and make a component that's added or removed
    - how to abstract the sensing range stuff? put it in the component I guess
+- 

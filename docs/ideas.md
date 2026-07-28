@@ -15,3 +15,18 @@
    - what if the rubble situation is that there are like rock-eating plants or animals that close off paths you've opened?
 - what are the resource constraints? 
 - rubble could be something. some reason to shovel it? some value in it? some risk for leaving it around?
+- WORMS
+   - small ones that move around looking for resources to eat
+   - maybe if you sense them they activate and start eating things
+   - maybe they activate if something near them gets changed in some way
+   - BIG WORM -- could be the food clock. it's approaching, you can sense it. maybe it's in the UI. certain things draw the worm closer, faster: explosions, cave-ins, killing little worms?? maybe some things slow it. but it's the reason why you have to keep moving.
+      - when it arrives maybe you can still avoid it. like the reaper in spelunky. 
+- tools ideas
+   - laser that goes until it expends a certain amount of energy
+   - bomb that works on one type of rock?
+   - eats a certain amount of rock in a random walk? maybe it's constrained to a certain rock type?
+   - what if a laser needs like ... wind-up? you place two blocks the farther apart they are the more powerful it is?
+- world dynamics
+   - a rock type that expands into adjacent spaces if it has them? is this just a plant??
+   - something that if hit with (damage type) expands? or infects nearby types?
+   - something that if you hit with a certain damage type it ... spreads the damage? like you can weaken all the rocks of the same type with the shot. Good for taking out "chunks" of the same type of rock. 

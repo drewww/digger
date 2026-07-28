@@ -95,6 +95,8 @@ function GameLevelState:__new(display)
    builder:addActor(prism.actors.Player(), 1, 1)
    builder:addActor(prism.actors.Drill(), 2, 4)
 
+   builder:addActor(prism.actors.Laser(), 3, 5)
+
    -- Add systems
    builder:addSystems(prism.systems.SensesSystem(), prism.systems.SightSystem())
 
@@ -149,6 +151,8 @@ function GameLevelState:updateDecision(dt, owner, decision)
 
       local holdable = self.level:query(prism.components.Holdable):at(destination:decompose()):first()
 
+      local laser = self.level:query(prism.components.LaserController):at(destination:decompose()):first()
+
 
       local dig = prism.actions.Dig(owner, destination, 1)
       local canDig = not owner:has(prism.components.Sensing) and self.level:canPerform(dig)
@@ -177,6 +181,11 @@ function GameLevelState:updateDecision(dt, owner, decision)
          local push = prism.actions.Push(owner, pushable, destination - owner:getPosition())
 
          if self:setAction(push) then return end
+      elseif laser then
+         prism.logger.info("activating laser")
+         laser:expect(prism.components.LaserController).active = true
+
+         if self:setAction(prism.actions.Wait(owner)) then return end
       else
          local move = prism.actions.Move(owner, destination)
          if self:setAction(move) then return end

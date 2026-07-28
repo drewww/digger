@@ -213,6 +213,12 @@ function GameLevelState:draw()
       -- Render the level using the player’s senses
       self.display:beginCamera()
       self.display:putSenses(primary, secondary, self.level)
+
+      -- Highlight any cell the laser is currently passing through.
+      for x, y, cell in self.level:eachCell() do
+         if cell and cell:has(prism.components.Laser) then self.display:putBG(x, y, prism.Color4.RED) end
+      end
+
       self.display:endCamera()
 
 
